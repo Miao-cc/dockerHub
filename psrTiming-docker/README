@@ -1,4 +1,11 @@
 ##build the image
-docker build -t pulsar:base .
+docker build -t psrtiming:base .
 
-##build the containor
+##build the container
+docker run -d -p 222:22 -v ~/Desktop/:/home/psr/work --name tempo2-mcc psrtiming:base
+
+##connect the container 
+ssh -X -p 222 psr@localhost
+
+passwd: psr
+

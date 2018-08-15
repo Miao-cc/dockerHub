@@ -228,7 +228,9 @@ RUN ./bootstrap && \
     make check && \
     make install
 
-RUN ENV | awk '{print "export ",$0}' >> $HOME/.profile
+#RUN ENV | awk '{print "export ",$0}' >> $HOME/.profile
+COPY bashrc $HOME
+RUN cat bashrc >> $HOME/.bashrc
 
 WORKDIR $HOME
 USER root

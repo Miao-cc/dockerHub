@@ -1,11 +1,11 @@
 version: '2'
 services:
-  presto:
+  psrtiming:
     build: .
     shm_size: 8gb
     container_name: tempo2
     volumes:
-     - ~/work/:/work/
+     - ~/work/:/home/psr/work/
      - /tmp/.X11-unix:/tmp/.X11-unix:ro
      - "/var/run/docker.sock:/var/run/docker.sock"
     environment:
@@ -15,6 +15,6 @@ services:
      - "22"
     ports:
      - "2223:22/tcp"
-    image: "psrtiming/base"
+    image: "psrtiming:base"
     command: "/usr/sbin/sshd -D"  
     tty: false
