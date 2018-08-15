@@ -1,0 +1,4 @@
+##build the image
+docker build -t pulsar:base .
+
+##build the containor
