@@ -230,7 +230,7 @@ RUN ./bootstrap && \
 
 #RUN ENV | awk '{print "export ",$0}' >> $HOME/.profile
 COPY bashrc $HOME
-RUN cat bashrc >> $HOME/.bashrc
+RUN cat $HOME/bashrc >> $HOME/.bashrc
 
 WORKDIR $HOME
 USER root

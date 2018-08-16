@@ -1,6 +1,6 @@
 #bashrc for psrsoft
 HOME=/home/psr
-PSRHOME=/home/psr/psrsoft
+PSRHOME=/home/psr/software
 #For psrsoft
 #For PGPLOT
 export PGPLOT_DIR=/usr/lib/pgplot5
