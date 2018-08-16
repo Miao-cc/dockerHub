@@ -144,7 +144,7 @@ ENV PGPLOT_FONT /usr/lib/pgplot5/grfont.dat
 ENV PGPLOT_INCLUDES /usr/include
 ENV PGPLOT_BACKGROUND white
 ENV PGPLOT_FOREGROUND black
-ENV PGPLOT_DEV /xs
+ENV PGPLOT_DEV /usr/bin/xs
 WORKDIR $PSRHOME
 
 # Pull all repos

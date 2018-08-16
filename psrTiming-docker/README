@@ -9,3 +9,30 @@ ssh -X -p 222 psr@localhost
 
 passwd: psr
 
+######
+There will some errors when login in
+1. X11 forwarding request failed on channel 0
+
+    https://www.cyberciti.biz/faq/how-to-fix-x11-forwarding-request-failed-on-channel-0/
+    
+    In Ubuntu is not 'sshd' but 'ssh'
+    So please run
+    /etc/init.d/ssh reload
+
+2. "X11 proxy: wrong authorisation protocol attempted"
+    cp /home/psr/.Xauthority /root/
+
+3. if you want to run with tempo2, there will be some errors will no pgplot
+server.
+So you need to run this before you run tempo2:
+    /usr/bin/./pgxwin_server &
+Or you can add this to the ~/.bashrc file then pgxserver will auto run when
+you login in.
+
+--------------------------------------------------------------------------------
+All this will need root
+So login root by
+    docker exec -it container-name /bin/bash
+Like:
+    docker exec -it tempo2-mcc /bin/bash
+--------------------------------------------------------------------------------
