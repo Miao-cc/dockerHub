@@ -1,0 +1,9 @@
+1 pulsarENV
+We had installed python environment and linux environment for puslar search
+and timing.
+
+# build pulsar base image
+docker build -f Dockerfile_pulsar.env -t pulsar-env:base .
+
+# create container
+./start.py docker-compose.yml

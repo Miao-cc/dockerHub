@@ -1,0 +1,11 @@
+# 此为注释 – 将被 Git 忽略
+# 忽略所有 .a 结尾的文件
+*.img
+*.clk
+# 忽略 build/ 目录下的所有文件
+modulePy/
+#
+pulsarTIMING/cpta.par2
+pulsarTIMING/cpta.tim2
+pulsarTIMING/fast2gps.clk
+

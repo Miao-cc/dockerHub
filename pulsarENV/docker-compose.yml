@@ -1,0 +1,18 @@
+version: '2'
+services:
+  dspsr-fast:
+    build: .
+    shm_size: 16gb
+    container_name: pulsar_env 
+    volumes:
+     - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    environment:
+     - DISPLAY=$DISPLAY
+    hostname: localhost
+    expose:
+     - "22"
+    ports:
+     - "2222:22/tcp"
+    image: "pulsar-env:base"
+    #command: "/usr/sbin/sshd -D"  
+    tty: false

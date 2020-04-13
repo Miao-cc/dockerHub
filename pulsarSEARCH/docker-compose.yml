@@ -1,0 +1,19 @@
+version: '2'
+services:
+  dspsr-fast:
+    build: .
+    shm_size: 8gb
+    container_name: fast_pulsar_search
+    volumes:
+     - ./:/work/
+     - /tmp/.X11-unix:/tmp/.X11-unix:ro
+    environment:
+     - DISPLAY=$DISPLAY
+    hostname: localhost
+    expose:
+     - "22"
+    ports:
+     - "2223:22/tcp"
+    image: "fast_psr:search"
+    command: "/usr/sbin/sshd -D"  
+    tty: false

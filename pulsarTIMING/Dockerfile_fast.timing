@@ -1,0 +1,117 @@
+# Copyright (C) 2016 by Ewan Barr
+# Licensed under the Academic Free License version 3.0
+# This program comes with ABSOLUTELY NO WARRANTY.
+# You are free to modify and redistribute this code as long
+# as you do not remove the above attribution and reasonably
+# inform receipients that you have modified the original work.
+
+FROM fast_psr:search
+
+MAINTAINER Chenchen Miao "miaocc@nao.cas.cn" 
+
+USER root
+#install epsic
+ENV EPSIC ${PSRHOME}/epsic
+WORKDIR ${EPSIC}/src
+RUN ./bootstrap && \
+    ./configure && \
+    make && \
+    make install
+
+USER psr
+
+# setting some ENV
+ENV HOME /home/psr
+ENV PSRHOME $HOME/software
+ENV OSTYPE linux
+ARG MAKE_PROC=1
+
+
+#pgplot
+ENV PGPLOT_DIR /usr/lib/pgplot5
+ENV PGPLOT_FONT /usr/lib/pgplot5/grfont.dat
+ENV PGPLOT_INCLUDES /usr/include
+ENV PGPLOT_BACKGROUND white
+ENV PGPLOT_FOREGROUND black
+ENV PGPLOT_DEV /xs
+
+#TEMPO
+ENV TEMPO $PSRHOME/tempo
+#PRESTO
+ENV PRESTO ${PSRHOME}/presto-3.0.1
+#PSRCAT_FILE
+ENV PSRCAT_FILE ${PSRHOME}/psrcat_tar/psrcat.db
+#PSRCHIVE
+ENV PSRCHIVE ${PSRHOME}/psrchive
+#PATH
+ENV PATH $PATH:/usr/local/bin:/usr/bin:${PSRHOME}/psrcat_tar:${TEMPO}/bin:${PRESTO}/bin
+#LD_LIBRARY_PATH
+ENV LD_LIBRARY_PATH ${LD_LIBRARY_PATH}:/usr/lib:/usr/local/lib:${PRESTO}/lib
+#C_INCLUDE_PATH
+ENV C_INCLUDE_PATH ${C_INCLUDE_PATH}:/usr/include:/usr/local/include:${PRESTO}/include
+#PYTHONPATH
+ENV PYTHONPATH ${PYTHONPATH}:$PRESTO/python
+
+#calceph
+ENV CALCEPH ${PSRHOME}/calceph
+ENV PATH ${PATH}:${CALCEPH}/bin
+WORKDIR ${PSRHOME}/calceph-3.1.0
+#RUN ./configure --disable-shared cc=gcc --prefix=${CALCEPH} && \
+#RUN ./configure --disable-shared --prefix=${CALCEPH} && \
+RUN ./configure --prefix=${CALCEPH} && \
+    make && \
+    make check && \
+    make install
+
+#TEMPO2
+ENV TEMPO2 ${PSRHOME}/tempo2
+ENV PATH ${PATH}:${TEMPO2}/bin
+WORKDIR ${PSRHOME}/tempo2Install
+RUN ./bootstrap && \
+    cp -r T2runtime ${TEMPO2} && \
+    ./configure --prefix=${TEMPO2} && \
+    make -j $MAKE_PROC && \
+    make install && \
+    make plugins && \
+    make plugins-install && \
+    make unsupported
+    #cp ${CALCEPH}/include/* . && \
+
+
+#PSRCHiVE
+ENV PSRCHIVE ${PSRHOME}/psrchive
+ENV PATH ${PATH}:${PSRCHIVE}/bin
+WORKDIR ${PSRCHIVE}
+RUN ./bootstrap && \
+    ./configure --prefix=${PSRCHIVE} --with-epsic-dir=/usr/local/bin  --with-epsic-lib-dir=/usr/local/lib --with-epsic-include-dir=/usr/local/include && \
+    make -j 4 && \
+    make check && \
+    make install
+
+
+ENV DSPSR_BUILD=$PSRHOME/dspsr_build
+ENV DSPSR_INSTALL=$PSRHOME/dspsr
+#RUN git clone https://git.code.sf.net/p/dspsr/code $DSPSR_BUILD
+WORKDIR $DSPSR_BUILD
+RUN echo "apsr asp bcpm bpsr caspsr cpsr2 cpsr dummy fits gmrt guppi kat lbadr64 lbadr lump lwa mark4 mark5 maxim mwa pdev pmdaq s2 sigproc spda1k spigot vdif uwb puma2" > backends.list && \
+    ./bootstrap && \
+    ./configure --prefix=$DSPSR_INSTALL && \
+    make -j $MAKE_PROC && \
+    make install
+
+# copy env file
+COPY TIMING_ENV $HOME/
+# update tempo2
+COPY fast2gps.clk ${TEMPO2}/clock/
+COPY observatories.dat ${TEMPO2}/observatory/observatories.dat
+ 
+
+RUN echo 'source $HOME/TIMING_ENV' >> $HOME/.profile
+# Create psr user which will be used to run commands with reduced privileges.
+USER root
+COPY sshd_config /etc/ssh/sshd_config
+CMD ["/usr/sbin/sshd", "-D"]
+ENV DISPLAY :0
+
+
+

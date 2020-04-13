@@ -1,0 +1,79 @@
+# Copyright (C) 2016 by Ewan Barr
+# Licensed under the Academic Free License version 3.0
+# This program comes with ABSOLUTELY NO WARRANTY.
+# You are free to modify and redistribute this code as long
+# as you do not remove the above attribution and reasonably
+# inform receipients that you have modified the original work.
+
+FROM pulsar-env:base
+
+MAINTAINER Chenchen Miao "miaocc@nao.cas.cn" 
+
+USER root
+RUN pip install pyfits scikit-learn==0.12.1
+
+USER psr
+
+# Define home, psrhome, OSTYPE and create the directory
+ENV HOME /home/psr
+ENV PSRHOME $HOME/software
+ENV OSTYPE linux
+RUN mkdir -p $PSRHOME
+ARG MAKE_PROC=4
+
+# PGPLOT
+ENV PGPLOT_DIR /usr/lib/pgplot5
+ENV PGPLOT_FONT /usr/lib/pgplot5/grfont.dat
+ENV PGPLOT_INCLUDES /usr/include
+ENV PGPLOT_BACKGROUND white
+ENV PGPLOT_FOREGROUND black
+ENV PGPLOT_DEV /xs
+
+
+WORKDIR $PSRHOME
+
+
+# Psrcat
+ENV PSRCAT_FILE $PSRHOME/psrcat_tar/psrcat.db
+ENV PATH $PATH:$PSRHOME/psrcat_tar
+WORKDIR $PSRHOME/psrcat_tar
+RUN /bin/bash makeit
+
+
+# Tempo
+ENV TEMPO $PSRHOME/tempo
+ENV PATH $PATH:$TEMPO/bin
+WORKDIR $TEMPO
+RUN ./prepare && \
+    ./configure --prefix=$PSRHOME/tempo && \
+    make && \
+    make install 
+
+
+# Presto
+ENV PRESTO $PSRHOME/presto-3.0.1
+ENV PATH $PATH:$PRESTO/bin
+ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$PRESTO/lib
+ENV C_INCLUDE_PATH $C_INCLUDE_PATH:$PRESTO/include
+
+WORKDIR $PRESTO/src
+RUN  make makewisdom && \
+     make prep && \
+     make  && \
+     make mpi
+
+WORKDIR $PRESTO
+RUN pip install .
+
+COPY sshd_config /etc/ssh/sshd_config
+COPY ubc_AI /home/psr/.local/lib/python2.7/site-packages/ubc_AI
+COPY PRESTO_ENV $HOME/
+RUN echo 'source $HOME/PRESTO_ENV' >> $HOME/.profile
+
+#
+# add ----
+# Create psr user which will be used to run commands with reduced privileges.
+USER root
+#EXPOSE 22
+CMD ["/usr/sbin/sshd", "-D"]
+ENV DISPLAY :0

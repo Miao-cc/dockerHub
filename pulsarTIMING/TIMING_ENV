@@ -1,0 +1,37 @@
+#/bin/bash
+# Define home, psrhome, OSTYPE and create the directory
+ROOTHOME=/home/psr
+PSRHOME=${ROOTHOME}/software
+OSTYPE=linux
+
+#calceph
+export CALCEPH=${PSRHOME}/calceph
+export PATH=${PATH}:${CALCEPH}/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:$CALCEPH/lib
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${CALCEPH}/include
+
+##epsic
+#export EPSIC=${PSRHOME}/local
+#export PATH=${PATH}:${EPSIC}/bin
+#export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${EPSIC}/include/epsic
+#export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${EPSIC}/lib
+
+#TEMPO2
+export TEMPO2=${PSRHOME}/tempo2
+export PATH=${PATH}:${TEMPO2}/bin
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${TEMPO2}/include
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${TEMPO2}/lib
+
+#psrchive
+export PSRCHIVE=${PSRHOME}/psrchive
+export PATH=${PATH}:${PSRCHIVE}/bin
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PSRCHIVE}/include
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PSRCHIVE}/lib
+
+
+# dspsr
+export PSRCHIVE=${PSRHOME}/dspsr
+export PATH=${PATH}:${PSRCHIVE}/bin
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PSRCHIVE}/include
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PSRCHIVE}/lib
+

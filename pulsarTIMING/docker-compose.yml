@@ -1,0 +1,21 @@
+version: '2'
+services:
+  dspsr-fast:
+    build: .
+    shm_size: 16gb
+    container_name: fast_pulsar_timing
+    volumes:
+     - ./:/work/
+     - /tmp/.X11-unix:/tmp/.X11-unix:ro
+       #- ./fast2gps.clk:/home/psr/software/tempo2/clock/fast2gps.clk
+       #- ./observatories.dat:/home/psr/software/tempo2/observatory/observatories.dat
+    environment:
+     - DISPLAY=$DISPLAY
+    hostname: localhost
+    expose:
+     - "22"
+    ports:
+     - "2224:22/tcp"
+    image: "fast_psr:timing"
+    #command: "/usr/sbin/sshd -D"  
+    tty: false

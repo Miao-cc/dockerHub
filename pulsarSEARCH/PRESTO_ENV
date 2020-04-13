@@ -1,0 +1,37 @@
+#/bin/bash
+# Define home, psrhome, OSTYPE and create the directory
+ROOTHOME=/home/psr
+PSRHOME=${ROOTHOME}/software
+OSTYPE=linux
+
+
+export PATH=${PATH}:/usr/bin:/usr/local/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/lib:/usr/local/lib
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:/usr/include:/usr/local/include
+
+#-------
+# PGPLOT
+export PGPLOT_DIR=/usr/lib/pgplot5
+export PGPLOT_FONT=/usr/lib/pgplot5/grfont.dat
+export PGPLOT_INCLUDES=/usr/include
+export PGPLOT_BACKGROUND=white
+export PGPLOT_FOREGROUND=black
+export PGPLOT_DEV=/xwindow
+#export PGPLOT_DEV=/xs
+export PGPLOT_LIB="-L /usr/X11R6/lib -lX11 -L ${PSRHOME}/pgplot -lpgplot"
+#-------
+#psrcat 
+export PATH=${PATH}:${PSRHOME}/psrcat_tar
+export PSRCAT_FILE=${PSRHOME}/psrcat_tar/psrcat.db
+#-------
+# tempo
+export TEMPO=${PSRHOME}/tempo
+export PATH=${PATH}:${TEMPO}/bin
+#-------
+#presto-V3
+export PRESTO=${PSRHOME}/presto-3.0.1
+export PATH=${PATH}:${PRESTO}/bin
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PRESTO}/lib
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PRESTO}/include
+#export PYTHONPATH=${PYTHONPATH}:${PRESTO}/python
+#-------
