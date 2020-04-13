@@ -1,3 +1,11 @@
+# docker images for fast pulsar searching and timing
+
+## how to create
+1. create  pulsarENV
+2. create pulsarSEARCH
+3. create pulsarTIMING
+
+## Notes
 1. pulsarENV
 
 This image is for the base environment. We installed the useful softwate and
