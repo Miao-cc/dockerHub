@@ -11,10 +11,15 @@ Or
 
 docker run -it -p 2223:22 -v ./:/work --name fast_pulsar_search fast_psr:search /bin/bash
 
-##login to the container 
+## login to the container 
 ssh -X -p 2223 psr@localhost
 
 passwd: psr
+
+## Note:
+We had editted the $PRESTO/src/sigproc_fb.c for FAST filterbank data.
+In this image, telescope_id 9 is FAST not ATA.
+
 
 --------------------------------------------------------------------------------
 All this will need root
