@@ -10,7 +10,7 @@ Or
 
 docker run -it -p 2224:22 -v ./:/work --name fast_pulsar_timing fast_psr:timing /bin/bash
 
-##login to the container 
+## login to the container 
 ssh -X -p 2224 psr@localhost
 
 passwd: psr
