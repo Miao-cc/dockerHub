@@ -32,6 +32,8 @@ ENV PGPLOT_DEV /xs
 
 WORKDIR $PSRHOME
 
+RUN wget http://prdownloads.sourceforge.net/sigproc/sigproc-4.3.tar.gz?download -O sigproc-4.3.tar.gz &&\
+    tar -zxvf sigproc-4.3.tar.gz
 
 # Psrcat
 ENV PSRCAT_FILE $PSRHOME/psrcat_tar/psrcat.db
@@ -57,13 +59,24 @@ ENV LD_LIBRARY_PATH $LD_LIBRARY_PATH:$PRESTO/lib
 ENV C_INCLUDE_PATH $C_INCLUDE_PATH:$PRESTO/include
 
 WORKDIR $PRESTO/src
+COPY sigproc_fb.c .
 RUN  make makewisdom && \
      make prep && \
-     make  && \
-     make mpi
+     make
 
 WORKDIR $PRESTO
 RUN pip install .
+
+## sigproc
+#ENV SIGPROC $PSRHOME/sigproc-4.3
+#ENV PATH $PATH:$SIGPROC/bin
+#ENV OSTYPE linux
+#WORKDIR $SIGPROC
+##RUN ./configure --prefix=$SIGPROC && \
+#RUN ./configure && \
+#    make && \
+#    make install
+
 
 COPY sshd_config /etc/ssh/sshd_config
 COPY ubc_AI /home/psr/.local/lib/python2.7/site-packages/ubc_AI
