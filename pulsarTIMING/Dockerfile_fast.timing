@@ -55,6 +55,7 @@ ENV PYTHONPATH ${PYTHONPATH}:$PRESTO/python
 #calceph
 ENV CALCEPH ${PSRHOME}/calceph
 ENV PATH ${PATH}:${CALCEPH}/bin
+ENV F77 gfortran
 WORKDIR ${PSRHOME}/calceph-3.1.0
 #RUN ./configure --disable-shared cc=gcc --prefix=${CALCEPH} && \
 #RUN ./configure --disable-shared --prefix=${CALCEPH} && \
@@ -109,7 +110,7 @@ COPY observatories.dat ${TEMPO2}/observatory/observatories.dat
 RUN echo 'source $HOME/TIMING_ENV' >> $HOME/.profile
 # Create psr user which will be used to run commands with reduced privileges.
 USER root
-COPY sshd_config /etc/ssh/sshd_config
+#COPY sshd_config /etc/ssh/sshd_config
 CMD ["/usr/sbin/sshd", "-D"]
 ENV DISPLAY :0
 

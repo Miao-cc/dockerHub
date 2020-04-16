@@ -10,7 +10,7 @@ FROM pulsar-env:base
 MAINTAINER Chenchen Miao "miaocc@nao.cas.cn" 
 
 USER root
-RUN pip install pyfits scikit-learn==0.12.1
+RUN pip install -i https://pypi.tuna.tsinghua.edu.cn/simple pyfits==3.5.0 scikit-learn==0.12.1
 
 USER psr
 
@@ -32,8 +32,6 @@ ENV PGPLOT_DEV /xs
 
 WORKDIR $PSRHOME
 
-RUN wget http://prdownloads.sourceforge.net/sigproc/sigproc-4.3.tar.gz?download -O sigproc-4.3.tar.gz &&\
-    tar -zxvf sigproc-4.3.tar.gz
 
 # Psrcat
 ENV PSRCAT_FILE $PSRHOME/psrcat_tar/psrcat.db
@@ -68,6 +66,8 @@ WORKDIR $PRESTO
 RUN pip install .
 
 ## sigproc
+#RUN wget http://prdownloads.sourceforge.net/sigproc/sigproc-4.3.tar.gz?download -O $PSRHOME/sigproc-4.3.tar.gz &&\
+    #tar -zxvf sigproc-4.3.tar.gz
 #ENV SIGPROC $PSRHOME/sigproc-4.3
 #ENV PATH $PATH:$SIGPROC/bin
 #ENV OSTYPE linux
@@ -78,7 +78,7 @@ RUN pip install .
 #    make install
 
 
-COPY sshd_config /etc/ssh/sshd_config
+#COPY sshd_config /etc/ssh/sshd_config
 COPY ubc_AI /home/psr/.local/lib/python2.7/site-packages/ubc_AI
 COPY PRESTO_ENV $HOME/
 RUN echo 'source $HOME/PRESTO_ENV' >> $HOME/.profile
