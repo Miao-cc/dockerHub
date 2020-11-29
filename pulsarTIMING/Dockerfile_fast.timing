@@ -57,9 +57,9 @@ ENV CALCEPH ${PSRHOME}/calceph
 ENV PATH ${PATH}:${CALCEPH}/bin
 ENV F77 gfortran
 WORKDIR ${PSRHOME}/calceph-3.1.0
-#RUN ./configure --disable-shared cc=gcc --prefix=${CALCEPH} && \
+#RUN ./configure --prefix=${CALCEPH} && \
 #RUN ./configure --disable-shared --prefix=${CALCEPH} && \
-RUN ./configure --prefix=${CALCEPH} && \
+RUN ./configure --disable-shared cc=gcc --prefix=${CALCEPH} && \
     make && \
     make check && \
     make install
@@ -84,10 +84,10 @@ ENV PSRCHIVE ${PSRHOME}/psrchive
 ENV PATH ${PATH}:${PSRCHIVE}/bin
 WORKDIR ${PSRCHIVE}
 RUN ./bootstrap && \
-    ./configure --prefix=${PSRCHIVE} --with-epsic-dir=/usr/local/bin  --with-epsic-lib-dir=/usr/local/lib --with-epsic-include-dir=/usr/local/include && \
+    ./configure --prefix=${PSRCHIVE} --with-epsic-dir=/usr/local/bin  --with-epsic-lib-dir=/usr/local/lib --with-epsic-include-dir=/usr/local/include --enable-shared && \
     make -j 4 && \
-    make check && \
     make install
+    #make check && \
 
 
 ENV DSPSR_BUILD=$PSRHOME/dspsr_build
@@ -105,7 +105,6 @@ COPY TIMING_ENV $HOME/
 # update tempo2
 COPY fast2gps.clk ${TEMPO2}/clock/
 COPY observatories.dat ${TEMPO2}/observatory/observatories.dat
- 
 
 RUN echo 'source $HOME/TIMING_ENV' >> $HOME/.profile
 # Create psr user which will be used to run commands with reduced privileges.

@@ -5,10 +5,8 @@ services:
     shm_size: 16gb
     container_name: fast_pulsar_timing
     volumes:
-     - ./:/work/
+#     - ./:/work/
      - /tmp/.X11-unix:/tmp/.X11-unix:ro
-       #- ./fast2gps.clk:/home/psr/software/tempo2/clock/fast2gps.clk
-       #- ./observatories.dat:/home/psr/software/tempo2/observatory/observatories.dat
     environment:
      - DISPLAY=$DISPLAY
     hostname: localhost

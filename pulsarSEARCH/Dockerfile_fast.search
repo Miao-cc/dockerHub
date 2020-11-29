@@ -63,22 +63,9 @@ RUN  make makewisdom && \
      make
 
 WORKDIR $PRESTO
-RUN pip install .
-
-## sigproc
-#RUN wget http://prdownloads.sourceforge.net/sigproc/sigproc-4.3.tar.gz?download -O $PSRHOME/sigproc-4.3.tar.gz &&\
-    #tar -zxvf sigproc-4.3.tar.gz
-#ENV SIGPROC $PSRHOME/sigproc-4.3
-#ENV PATH $PATH:$SIGPROC/bin
-#ENV OSTYPE linux
-#WORKDIR $SIGPROC
-##RUN ./configure --prefix=$SIGPROC && \
-#RUN ./configure && \
-#    make && \
-#    make install
+RUN pip install --target=$PSRHOME/python2.7/site-packages .
 
 
-#COPY sshd_config /etc/ssh/sshd_config
 COPY ubc_AI /home/psr/.local/lib/python2.7/site-packages/ubc_AI
 COPY PRESTO_ENV $HOME/
 RUN echo 'source $HOME/PRESTO_ENV' >> $HOME/.profile

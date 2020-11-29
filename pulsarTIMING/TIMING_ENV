@@ -27,11 +27,11 @@ export PSRCHIVE=${PSRHOME}/psrchive
 export PATH=${PATH}:${PSRCHIVE}/bin
 export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PSRCHIVE}/include
 export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PSRCHIVE}/lib
+export PYTHONPATH=${PYTHONPATH}:${PSRCHIVE}/lib/python2.7/site-packages 
 
 
 # dspsr
-export PSRCHIVE=${PSRHOME}/dspsr
-export PATH=${PATH}:${PSRCHIVE}/bin
-export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PSRCHIVE}/include
-export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${PSRCHIVE}/lib
-
+export DSPSR=${PSRHOME}/dspsr
+export PATH=${PATH}:${DSPSR}/bin
+export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${DSPSR}/include
+export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${DSPSR}/lib
