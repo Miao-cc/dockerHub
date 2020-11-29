@@ -22,5 +22,7 @@ Contained pulsar search software also.
 
 4. some example
 docker run -it -p 2223:22 -v ./:/work --name fast_pulsar_env /bin/bash pulsar-env:base
+
 docker run -it -p 2223:22 -v ./:/work --name fast_pulsar_search fast_psr:search /bin/bash
+
 docker run -it -p 2224:22 -v ./:/work --name fast_pulsar_timing fast_psr:timing /bin/bash
