@@ -37,5 +37,4 @@ export C_INCLUDE_PATH=${C_INCLUDE_PATH}:${PRESTO}/include
 #-------
 #python path
 export PATH=${PATH}:${PSRHOME}/bin
-export PYTHONPATH=${PYTHONPATH}:${PSRHOME}/lib/python2.7/site-packages 
-
+export PYTHONPATH=${PYTHONPATH}:${PSRHOME}/python2.7/site-packages 
